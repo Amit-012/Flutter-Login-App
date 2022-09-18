@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  int days = 30;
+  String name = "Amit sharma";
+
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Material(
+    return Material(
       child: Center(
-        child: Text("This is my 30 days flutter tutorial"),
+        child: Text("This is my $days flutter tutorial by $name"),
       ),
     );
   }
