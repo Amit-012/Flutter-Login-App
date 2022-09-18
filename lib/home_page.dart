@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: Center(
-        child: Text("This is my $days flutter tutorial by $name"),
+        child: Text("Welcome to $days flutter tutorial by $name"),
       ),
     );
   }
