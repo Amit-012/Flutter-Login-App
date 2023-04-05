@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "566601646538",
+    "project_id": "uniquesofindia-c4f7b",
+    "storage_bucket": "uniquesofindia-c4f7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:566601646538:android:7cd691c11c715905d34f33",
+        "android_client_info": {
+          "package_name": "com.example.demoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "566601646538-qtlovdf4dsmlbm1t0upr49nbgdtp8kg3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.demoapp",
+            "certificate_hash": "a2994cf8b7222aab06bd7fb3e9c5ec401bc6839d"
+          }
+        },
+        {
+          "client_id": "566601646538-v9hofehb2s3ft3k8qi41mkrua54hj0ui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJAkZzwKEJbTNy1ThR_aZ4TCq5OHm_j4g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "566601646538-v9hofehb2s3ft3k8qi41mkrua54hj0ui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "566601646538-ahu9f3di16dhievj2o6i6hv32l3oc757.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.demoapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

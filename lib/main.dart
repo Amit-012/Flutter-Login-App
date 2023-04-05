@@ -1,27 +1,33 @@
-import 'package:demoapp/pages/home_page.dart';
-import 'package:demoapp/pages/login_page.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_const_constructors
 
-void main(List<String> args) {
+import 'package:demoapp/pages/splash.dart';
+import 'package:demoapp/resources/auth.dart';
+import 'package:demoapp/widgets/theme.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp().then((value) => Get.put(Auththentication()));
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      themeMode: ThemeMode.light,
-      theme: ThemeData(primarySwatch: Colors.deepPurple),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-      ),
-      initialRoute: "/Home",
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+
+      theme: MyTheme.lightTheme,
+      darkTheme: MyTheme.darkTheme,
+      themeMode: ThemeMode.system,
+
+      // routes
+      initialRoute: "/",
       routes: {
-        "/": (context) => const LoginPage(),
-        "/Home": (context) => const HomePage(),
-        "/Login": (context) => const LoginPage()
+        "/": (context) => SplashScreen(),
       },
     );
   }
