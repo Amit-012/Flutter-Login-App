@@ -17,7 +17,7 @@ class MyTheme {
     brightness: Brightness.dark,
     appBarTheme: MyAppBarTheme.darkAppBar,
     scaffoldBackgroundColor: MyAppColor.cardBgColor,
-    cardColor: MyAppColor.cardBgColor,
+    cardColor: MyAppColor.primaryColor,
     primaryColor: MyAppColor.seondaryColor,
     accentColor: MyAppColor.lightCanvasColor,
   );

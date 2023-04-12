@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:demoapp/models/user_model.dart';
 import 'package:demoapp/pages/home_page.dart';
-import 'package:demoapp/resources/auth.dart';
+import 'package:demoapp/resources/repositary/auth_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +20,8 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
+    var fullNameController = TextEditingController();
+    var phoneNoContoller = TextEditingController();
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Padding(
@@ -78,6 +81,7 @@ class _SignupPageState extends State<SignupPage> {
                   child: Column(
                     children: [
                       TextFormField(
+                        controller: fullNameController,
                         decoration: InputDecoration(
                           icon: Icon(
                             Icons.person_outline_rounded,
@@ -107,6 +111,7 @@ class _SignupPageState extends State<SignupPage> {
                         height: 20,
                       ),
                       TextFormField(
+                        controller: phoneNoContoller,
                         decoration: InputDecoration(
                           icon: Icon(
                             Icons.phone_android_outlined,
@@ -207,6 +212,12 @@ class _SignupPageState extends State<SignupPage> {
                               BorderRadius.circular(changeButton ? 40 : 80),
                           child: InkWell(
                             onTap: () async {
+                              final user = UserModel(
+                                  fullNameController.text.trim(),
+                                  phoneNoContoller.text.trim(),
+                                  emailController.text.trim(),
+                                  passwordController.text.trim());
+                              Auththentication.instance.createUser(user);
                               Auththentication.instance.register(
                                   emailController.text.trim(),
                                   passwordController.text.trim());

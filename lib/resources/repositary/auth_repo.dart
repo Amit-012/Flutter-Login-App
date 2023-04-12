@@ -1,14 +1,20 @@
+// ignore_for_file: avoid_print
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demoapp/pages/home_page.dart';
 import 'package:demoapp/pages/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../models/user_model.dart';
 
 class Auththentication extends GetxController {
   static Auththentication instance = Get.find();
 
   FirebaseAuth auth = FirebaseAuth.instance;
+  final _database = FirebaseFirestore.instance;
   late Rx<User?> _user;
+
   @override
   void onReady() {
     super.onReady();
@@ -19,12 +25,31 @@ class Auththentication extends GetxController {
 
   _initialScreen(User? user) {
     if (user == null) {
-      // ignore: avoid_print
       print("Login page");
       Get.offAll(() => const LoginPage());
     } else {
       Get.offAll(() => HomePage());
     }
+  }
+
+  void createUser(UserModel user) async {
+    await _database
+        .collection("Users")
+        .add(user.toJson())
+        .whenComplete(
+          () => Get.snackbar("Success", "Your account has been created.",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.green.withOpacity(0.1),
+              colorText: Colors.green),
+        )
+        .catchError((error, stackTrace) {
+      Get.snackbar("Erroer", "Somthing went wrong. Try again",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.greenAccent.withOpacity(0.1),
+          colorText: Colors.green);
+      print(error.toString());
+      return error;
+    });
   }
 
   void register(String email, String password) async {
@@ -69,15 +94,15 @@ class Auththentication extends GetxController {
       await auth.sendPasswordResetEmail(email: email);
     } catch (e) {
       Get.snackbar('About Reset Password', 'Reset Password message',
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Colors.green.withOpacity(0.1),
           snackPosition: SnackPosition.BOTTOM,
           titleText: const Text(
             'We have sent you an email to recover password, please chect mail',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.green),
           ),
           messageText: Text(
             e.toString(),
-            style: const TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.green),
           ));
     }
   }

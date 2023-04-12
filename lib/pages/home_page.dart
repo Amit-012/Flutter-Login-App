@@ -1,4 +1,4 @@
-import 'package:demoapp/models/catelog.dart';
+import 'package:demoapp/models/items_model.dart';
 import 'package:demoapp/widgets/drawer.dart';
 import 'package:demoapp/widgets/item_widget.dart';
 import 'package:flutter/material.dart';

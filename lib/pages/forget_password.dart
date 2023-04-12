@@ -1,7 +1,7 @@
 // ignore_for_file: unused_local_variable, prefer_const_constructors
 
 import 'dart:async';
-import 'package:demoapp/resources/auth.dart';
+import 'package:demoapp/resources/repositary/auth_repo.dart';
 import 'package:demoapp/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 
