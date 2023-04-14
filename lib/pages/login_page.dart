@@ -3,9 +3,10 @@
 import 'package:demoapp/pages/signup_page.dart';
 import 'package:demoapp/pages/home_page.dart';
 import 'package:demoapp/resources/repositary/auth_repo.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../widgets/textfield_widget.dart';
 import 'forget_password.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,6 +18,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool changeButton = false;
+  bool isLoading = false;
   final _formKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
@@ -71,25 +73,14 @@ class _LoginPageState extends State<LoginPage> {
                       key: _formKey,
                       child: Column(
                         children: [
-                          TextFormField(
+                          MyTextFormField(
                             controller: emailController,
-                            decoration: InputDecoration(
-                              icon: Icon(
-                                Icons.email_outlined,
-                                color: Colors.black,
-                              ),
-                              border: OutlineInputBorder(),
-                              labelText: 'E-mail id',
-                              hintText: 'Enter E-mail id',
-                              labelStyle:
-                                  TextStyle(color: Theme.of(context).cardColor),
-                              hintStyle:
-                                  TextStyle(color: Theme.of(context).cardColor),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Theme.of(context).cardColor),
-                              ),
+                            icon: Icon(
+                              Icons.email_outlined,
+                              color: Colors.black,
                             ),
+                            labelText: 'E-mail id',
+                            hintText: 'Enter E-mail id',
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Email field cannot be empty';
@@ -101,27 +92,15 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(
                             height: 20,
                           ),
-                          TextFormField(
+                          MyTextFormField(
                             controller: passwordController,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: 'Enter Password',
-                              labelText: 'Password',
-                              labelStyle:
-                                  TextStyle(color: Theme.of(context).cardColor),
-                              hintStyle:
-                                  TextStyle(color: Theme.of(context).cardColor),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Theme.of(context).cardColor),
-                              ),
-                              icon: Icon(
-                                Icons.fingerprint_outlined,
-                                color: Colors.black,
-                                size: 25,
-                              ),
+                            hintText: 'Enter Password',
+                            labelText: 'Password',
+                            icon: Icon(
+                              Icons.fingerprint_outlined,
+                              color: Colors.black,
+                              size: 25,
                             ),
-                            obscureText: true,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Password field cannot be empty';
@@ -159,18 +138,44 @@ class _LoginPageState extends State<LoginPage> {
                                 BorderRadius.circular(changeButton ? 40 : 80),
                             child: InkWell(
                               onTap: () async {
-                                Auththentication.instance.login(
-                                    emailController.text.trim(),
-                                    passwordController.text.trim());
+                                // Auththentication.instance.login(
+                                //     emailController.text.trim(),
+                                //     passwordController.text.trim());
+
+                                setState(() {
+                                  isLoading = true;
+                                });
+
+                                String res =
+                                    await Auththentication.instance.loginUser(
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim(),
+                                );
+                                if (res == "success") {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                } else {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+
+                                  Get.snackbar("Error", res);
+                                }
                                 if (_formKey.currentState!.validate()) {
                                   setState(() {
                                     changeButton = true;
                                   });
                                   await Future.delayed(Duration(seconds: 1));
 
-                                  setState(() {
-                                    changeButton = false;
-                                  });
+                                  if (mounted) {
+                                    setState(
+                                      () {
+                                        changeButton = false;
+                                      },
+                                    );
+                                    // Get.to(() => HomePage());
+                                  }
                                 }
                               },
                               child: AnimatedContainer(

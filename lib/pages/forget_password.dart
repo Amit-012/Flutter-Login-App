@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:demoapp/resources/repositary/auth_repo.dart';
 import 'package:demoapp/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -102,15 +103,19 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         onTap: wait
                             ? null
                             : () {
-                                Auththentication.instance
-                                    .resetPassword(emailController.text.trim());
+                                Auththentication.instance.resetPassword(
+                                  email: emailController.text.trim(),
+                                );
                                 startTimer();
                                 setState(() {
                                   start = 30;
                                   wait = true;
                                   buttonName = 'Resend Mail';
                                 });
-                                if (_formKey.currentState!.validate()) {}
+                                if (_formKey.currentState!.validate()) {
+                                  Get.snackbar("Please check Spam Email",
+                                      "We have sent you a reset password mail.");
+                                }
                               },
                         child: SizedBox(
                           height: 40,

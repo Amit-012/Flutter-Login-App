@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:demoapp/models/user_model.dart';
-import 'package:demoapp/pages/home_page.dart';
 import 'package:demoapp/resources/repositary/auth_repo.dart';
+import 'package:demoapp/pages/home_page.dart';
+import '../widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,14 +14,17 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final fullNameController = TextEditingController();
+  final phoneNoContoller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool changeButton = false;
+  bool isStudent = true;
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
-    var emailController = TextEditingController();
-    var passwordController = TextEditingController();
-    var fullNameController = TextEditingController();
-    var phoneNoContoller = TextEditingController();
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Padding(
@@ -80,25 +83,14 @@ class _SignupPageState extends State<SignupPage> {
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
-                      TextFormField(
+                      MyTextFormField(
                         controller: fullNameController,
-                        decoration: InputDecoration(
-                          icon: Icon(
-                            Icons.person_outline_rounded,
-                            color: Colors.black,
-                          ),
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Theme.of(context).cardColor),
-                          ),
-                          labelText: 'Full Name',
-                          labelStyle:
-                              TextStyle(color: Theme.of(context).cardColor),
-                          hintText: 'Enter name',
-                          hintStyle:
-                              TextStyle(color: Theme.of(context).cardColor),
+                        icon: Icon(
+                          Icons.person_outline_rounded,
+                          color: Colors.black,
                         ),
+                        labelText: 'Full Name',
+                        hintText: 'Enter name',
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Name field cannot be empty';
@@ -110,25 +102,14 @@ class _SignupPageState extends State<SignupPage> {
                       SizedBox(
                         height: 20,
                       ),
-                      TextFormField(
+                      MyTextFormField(
                         controller: phoneNoContoller,
-                        decoration: InputDecoration(
-                          icon: Icon(
-                            Icons.phone_android_outlined,
-                            color: Colors.black,
-                          ),
-                          border: OutlineInputBorder(),
-                          labelText: 'Phone No.',
-                          hintText: 'Enter Phone No.',
-                          labelStyle:
-                              TextStyle(color: Theme.of(context).cardColor),
-                          hintStyle:
-                              TextStyle(color: Theme.of(context).cardColor),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Theme.of(context).cardColor),
-                          ),
+                        icon: Icon(
+                          Icons.phone_android_outlined,
+                          color: Colors.black,
                         ),
+                        labelText: 'Phone No.',
+                        hintText: 'Enter Phone No.',
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Phone No field cannot be empty';
@@ -140,25 +121,14 @@ class _SignupPageState extends State<SignupPage> {
                       SizedBox(
                         height: 20.0,
                       ),
-                      TextFormField(
+                      MyTextFormField(
                         controller: emailController,
-                        decoration: InputDecoration(
-                          icon: Icon(
-                            Icons.email_outlined,
-                            color: Colors.black,
-                          ),
-                          border: OutlineInputBorder(),
-                          labelText: 'E-mail id',
-                          hintText: 'Enter E-mail id',
-                          labelStyle:
-                              TextStyle(color: Theme.of(context).cardColor),
-                          hintStyle:
-                              TextStyle(color: Theme.of(context).cardColor),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Theme.of(context).cardColor),
-                          ),
+                        icon: Icon(
+                          Icons.email_outlined,
+                          color: Colors.black,
                         ),
+                        labelText: 'E-mail id',
+                        hintText: 'Enter E-mail id',
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Email field cannot be empty';
@@ -170,27 +140,15 @@ class _SignupPageState extends State<SignupPage> {
                       SizedBox(
                         height: 20.0,
                       ),
-                      TextFormField(
+                      MyTextFormField(
                         controller: passwordController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Enter Password',
-                          labelText: 'Password',
-                          labelStyle:
-                              TextStyle(color: Theme.of(context).cardColor),
-                          hintStyle:
-                              TextStyle(color: Theme.of(context).cardColor),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Theme.of(context).cardColor),
-                          ),
-                          icon: Icon(
-                            Icons.fingerprint_outlined,
-                            color: Colors.black,
-                            size: 25,
-                          ),
+                        hintText: 'Enter Password',
+                        labelText: 'Password',
+                        icon: Icon(
+                          Icons.fingerprint_outlined,
+                          color: Colors.black,
+                          size: 25,
                         ),
-                        obscureText: true,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Password field cannot be empty';
@@ -212,15 +170,28 @@ class _SignupPageState extends State<SignupPage> {
                               BorderRadius.circular(changeButton ? 40 : 80),
                           child: InkWell(
                             onTap: () async {
-                              final user = UserModel(
-                                  fullNameController.text.trim(),
-                                  phoneNoContoller.text.trim(),
-                                  emailController.text.trim(),
-                                  passwordController.text.trim());
-                              Auththentication.instance.createUser(user);
-                              Auththentication.instance.register(
-                                  emailController.text.trim(),
-                                  passwordController.text.trim());
+                              setState(() {
+                                isLoading = true;
+                              });
+
+                              String res =
+                                  await Auththentication.instance.signupUser(
+                                fullName: fullNameController.text.trim(),
+                                emailAddress: emailController.text.trim(),
+                                passWord: passwordController.text.trim(),
+                                phoneNumber: phoneNoContoller.text.trim(),
+                              );
+                              if (res == "success") {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              } else {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                Get.snackbar("Error", res);
+                              }
+
                               if (_formKey.currentState!.validate()) {
                                 setState(() {
                                   changeButton = true;
@@ -232,6 +203,7 @@ class _SignupPageState extends State<SignupPage> {
                                 setState(() {
                                   changeButton = false;
                                 });
+                                // Get.to(() => LoginPage());
                               }
                             },
                             child: AnimatedContainer(
