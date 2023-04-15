@@ -1,7 +1,7 @@
 // ignore_for_file: unused_local_variable, prefer_const_constructors
 
 import 'dart:async';
-import 'package:demoapp/resources/repositary/auth_repo.dart';
+import 'package:demoapp/resources/auth_repo.dart';
 import 'package:demoapp/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -113,8 +113,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                   buttonName = 'Resend Mail';
                                 });
                                 if (_formKey.currentState!.validate()) {
-                                  Get.snackbar("Please check Spam Email",
-                                      "We have sent you a reset password mail.");
+                                  Get.snackbar(
+                                    "Please check Spam Email",
+                                    "We have sent you a reset password mail.",
+                                  );
                                 }
                               },
                         child: SizedBox(
@@ -124,9 +126,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                             child: Text(
                               buttonName,
                               style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),

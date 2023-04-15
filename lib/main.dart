@@ -2,7 +2,7 @@
 
 import 'package:demoapp/firebase_options.dart';
 import 'package:demoapp/pages/splash.dart';
-import 'package:demoapp/resources/repositary/auth_repo.dart';
+import 'package:demoapp/resources/auth_repo.dart';
 import 'package:demoapp/widgets/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

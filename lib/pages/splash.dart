@@ -1,8 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace
-
-import 'package:demoapp/pages/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,8 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigatetologin() async {
-    await Future.delayed(Duration(seconds: 2), () {});
-    Get.to(LoginPage());
+    await Future.delayed(const Duration(seconds: 2), () {});
   }
 
   @override
@@ -31,6 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Positioned(
             child: Center(
+              // ignore: sized_box_for_whitespace
               child: Container(
                   height: 40.0,
                   width: 150.0,

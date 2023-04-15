@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:demoapp/resources/repositary/auth_repo.dart';
+import 'package:demoapp/resources/auth_repo.dart';
 import 'package:demoapp/pages/home_page.dart';
 import '../widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'login_page.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -20,7 +21,6 @@ class _SignupPageState extends State<SignupPage> {
   final phoneNoContoller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool changeButton = false;
-  bool isStudent = true;
   bool isLoading = false;
 
   @override
@@ -203,7 +203,7 @@ class _SignupPageState extends State<SignupPage> {
                                 setState(() {
                                   changeButton = false;
                                 });
-                                // Get.to(() => LoginPage());
+                                Get.to(() => LoginPage());
                               }
                             },
                             child: AnimatedContainer(

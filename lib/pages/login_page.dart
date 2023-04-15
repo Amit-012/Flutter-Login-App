@@ -2,8 +2,7 @@
 
 import 'package:demoapp/pages/signup_page.dart';
 import 'package:demoapp/pages/home_page.dart';
-import 'package:demoapp/resources/repositary/auth_repo.dart';
-
+import 'package:demoapp/resources/auth_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../widgets/textfield_widget.dart';
@@ -174,7 +173,6 @@ class _LoginPageState extends State<LoginPage> {
                                         changeButton = false;
                                       },
                                     );
-                                    // Get.to(() => HomePage());
                                   }
                                 }
                               },

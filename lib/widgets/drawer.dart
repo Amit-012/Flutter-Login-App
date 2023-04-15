@@ -3,6 +3,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../resources/auth_repo.dart';
+
 class Mydrawer extends StatelessWidget {
   const Mydrawer({super.key});
 
@@ -40,7 +42,9 @@ class Mydrawer extends StatelessWidget {
           InkWell(
             child: ListTile(
               leading: Icon(CupertinoIcons.person),
-              onTap: () {},
+              onTap: () {
+                Auththentication.instance.signOutUser();
+              },
               title: Text("Logout", textScaleFactor: 1.2),
             ),
           )

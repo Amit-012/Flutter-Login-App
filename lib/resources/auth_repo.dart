@@ -7,29 +7,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import '../pages/home_page.dart';
+import '../pages/login_page.dart';
 
 class Auththentication extends GetxController {
   static Auththentication instance = Get.find();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final _database = FirebaseFirestore.instance;
-  // late Rx<User?> _user;
+  late Rx<User?> _user;
 
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  //   _user = Rx<User?>(_auth.currentUser);
-  //   _user.bindStream(_auth.userChanges());
-  //   ever(_user, _initialScreen);
-  // }
+  @override
+  void onReady() {
+    super.onReady();
+    _user = Rx<User?>(_auth.currentUser);
+    _user.bindStream(_auth.userChanges());
+    ever(_user, _initialScreen);
+  }
 
-  // _initialScreen(User? user) {
-  //   if (user == null) {
-  //     Get.offAll(() => const LoginPage());
-  //   } else {
-  //     Get.offAll(() => HomePage());
-  //   }
-  // }
+  _initialScreen(User? user) {
+    if (user == null) {
+      Get.offAll(() => const LoginPage());
+    } else {
+      Get.offAll(() => HomePage());
+    }
+  }
 
   // Sign up User
   Future<String> signupUser({
@@ -86,6 +88,7 @@ class Auththentication extends GetxController {
     return res;
   }
 
+  // Reset password
   Future<String> resetPassword({required String email}) async {
     String res = 'some error occured';
 
