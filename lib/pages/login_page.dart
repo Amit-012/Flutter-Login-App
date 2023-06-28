@@ -17,7 +17,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool changeButton = false;
-  bool isLoading = false;
   final _formKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
@@ -141,24 +140,15 @@ class _LoginPageState extends State<LoginPage> {
                                 //     emailController.text.trim(),
                                 //     passwordController.text.trim());
 
-                                setState(() {
-                                  isLoading = true;
-                                });
-
                                 String res =
                                     await Auththentication.instance.loginUser(
                                   email: emailController.text.trim(),
                                   password: passwordController.text.trim(),
                                 );
                                 if (res == "success") {
-                                  setState(() {
-                                    isLoading = false;
-                                  });
+                                  Get.snackbar('Success',
+                                      'You have logedin successfully');
                                 } else {
-                                  setState(() {
-                                    isLoading = false;
-                                  });
-
                                   Get.snackbar("Error", res);
                                 }
                                 if (_formKey.currentState!.validate()) {

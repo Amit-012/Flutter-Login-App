@@ -11,7 +11,7 @@ class MyTheme {
     scaffoldBackgroundColor: MyAppColor.primaryColor,
     cardColor: MyAppColor.seondaryColor,
     primaryColor: MyAppColor.primaryColor,
-    accentColor: MyAppColor.darkCanvasColor,
+    hintColor: MyAppColor.darkCanvasColor,
   );
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
@@ -19,6 +19,6 @@ class MyTheme {
     scaffoldBackgroundColor: MyAppColor.cardBgColor,
     cardColor: MyAppColor.primaryColor,
     primaryColor: MyAppColor.seondaryColor,
-    accentColor: MyAppColor.lightCanvasColor,
+    hintColor: MyAppColor.lightCanvasColor,
   );
 }

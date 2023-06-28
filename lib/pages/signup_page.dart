@@ -1,11 +1,13 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, sized_box_for_whitespace
 
 import 'package:demoapp/resources/auth_repo.dart';
 import 'package:demoapp/pages/home_page.dart';
+import 'package:demoapp/utils/utils.dart';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 import '../widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'login_page.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -18,17 +20,26 @@ class _SignupPageState extends State<SignupPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final fullNameController = TextEditingController();
-  final phoneNoContoller = TextEditingController();
+  final phoneNoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool changeButton = false;
-  bool isLoading = false;
+
+  Uint8List? image;
+
+  // method: pick image
+  void selectImage() async {
+    Uint8List? im = await pickImage(ImageSource.gallery);
+    setState(() {
+      image = im;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
+      child: Container(
+        padding: EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -42,7 +53,11 @@ class _SignupPageState extends State<SignupPage> {
                     icon: const Icon(Icons.close),
                   ),
                   SizedBox(
-                    width: 100,
+                    width: 40,
+                  ),
+                  Text(
+                    'Signup to',
+                    style: TextStyle(fontSize: 28, color: Colors.black),
                   ),
                   SizedBox(
                     width: 40,
@@ -54,25 +69,43 @@ class _SignupPageState extends State<SignupPage> {
               SizedBox(
                 height: 50,
               ),
-              Row(
-                children: const [
-                  SizedBox(
-                    width: 16,
+              GestureDetector(
+                onTap: selectImage,
+                child: Container(
+                  height: 70,
+                  width: 70,
+                  child: Stack(
+                    children: [
+                      image != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image(image: MemoryImage(image!)),
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image(
+                                  image: NetworkImage(
+                                      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png')),
+                            ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: Container(
+                          height: 24,
+                          width: 24,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).cardColor,
+                              borderRadius: BorderRadius.circular(100)),
+                          child: Icon(
+                            Icons.add_a_photo,
+                            color: Theme.of(context).canvasColor,
+                            size: 18,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                  Text(
-                    'Signup to',
-                    style: TextStyle(fontSize: 28, color: Colors.black),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  SizedBox(
-                    height: 38,
-                    child: Image(
-                      image: AssetImage('assets/images/logo.png'),
-                    ),
-                  ),
-                ],
+                ),
               ),
               SizedBox(
                 height: 50,
@@ -103,7 +136,7 @@ class _SignupPageState extends State<SignupPage> {
                         height: 20,
                       ),
                       MyTextFormField(
-                        controller: phoneNoContoller,
+                        controller: phoneNoController,
                         icon: Icon(
                           Icons.phone_android_outlined,
                           color: Colors.black,
@@ -170,28 +203,6 @@ class _SignupPageState extends State<SignupPage> {
                               BorderRadius.circular(changeButton ? 40 : 80),
                           child: InkWell(
                             onTap: () async {
-                              setState(() {
-                                isLoading = true;
-                              });
-
-                              String res =
-                                  await Auththentication.instance.signupUser(
-                                fullName: fullNameController.text.trim(),
-                                emailAddress: emailController.text.trim(),
-                                passWord: passwordController.text.trim(),
-                                phoneNumber: phoneNoContoller.text.trim(),
-                              );
-                              if (res == "success") {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              } else {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                                Get.snackbar("Error", res);
-                              }
-
                               if (_formKey.currentState!.validate()) {
                                 setState(() {
                                   changeButton = true;
@@ -203,7 +214,20 @@ class _SignupPageState extends State<SignupPage> {
                                 setState(() {
                                   changeButton = false;
                                 });
-                                Get.to(() => LoginPage());
+                              }
+                              String res =
+                                  await Auththentication.instance.signupUser(
+                                fullName: fullNameController.text.trim(),
+                                emailAddress: emailController.text.trim(),
+                                passWord: passwordController.text.trim(),
+                                phoneNumber: phoneNoController.text.trim(),
+                                image: image,
+                              );
+                              if (res == "success") {
+                                Get.snackbar('Success',
+                                    'Your account has successfully created');
+                              } else {
+                                Get.snackbar("Error", res);
                               }
                             },
                             child: AnimatedContainer(

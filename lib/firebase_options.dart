@@ -44,41 +44,39 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBP4ObZ6kDjT-rO2qiCVtAw50bHA21cea0',
-    appId: '1:566601646538:web:7650020575d86290d34f33',
-    messagingSenderId: '566601646538',
-    projectId: 'uniquesofindia-c4f7b',
-    authDomain: 'uniquesofindia-c4f7b.firebaseapp.com',
-    storageBucket: 'uniquesofindia-c4f7b.appspot.com',
+    apiKey: 'AIzaSyA9Ih2tE5knxjMwpCNcNzxeXTYIPTNUgp8',
+    appId: '1:976258601942:web:7ca165c8372efe7dc20a77',
+    messagingSenderId: '976258601942',
+    projectId: 'first-app-48a0e',
+    authDomain: 'first-app-48a0e.firebaseapp.com',
+    storageBucket: 'first-app-48a0e.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCJAkZzwKEJbTNy1ThR_aZ4TCq5OHm_j4g',
-    appId: '1:566601646538:android:7cd691c11c715905d34f33',
-    messagingSenderId: '566601646538',
-    projectId: 'uniquesofindia-c4f7b',
-    storageBucket: 'uniquesofindia-c4f7b.appspot.com',
+    apiKey: 'AIzaSyCX4HU72WmTT3NtIrvgtj6hZQDqmufMArg',
+    appId: '1:976258601942:android:e07c5722157396a8c20a77',
+    messagingSenderId: '976258601942',
+    projectId: 'first-app-48a0e',
+    storageBucket: 'first-app-48a0e.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD87XXZQJvPDVY2xdHWHRggiBC2qGmg0O4',
-    appId: '1:566601646538:ios:1bd40fe139826df2d34f33',
-    messagingSenderId: '566601646538',
-    projectId: 'uniquesofindia-c4f7b',
-    storageBucket: 'uniquesofindia-c4f7b.appspot.com',
-    androidClientId: '566601646538-qtlovdf4dsmlbm1t0upr49nbgdtp8kg3.apps.googleusercontent.com',
-    iosClientId: '566601646538-ahu9f3di16dhievj2o6i6hv32l3oc757.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAEVbyRkc99lY5QrxQXJGTUGLKiwXRrAQM',
+    appId: '1:976258601942:ios:e16f698239ea8658c20a77',
+    messagingSenderId: '976258601942',
+    projectId: 'first-app-48a0e',
+    storageBucket: 'first-app-48a0e.appspot.com',
+    iosClientId: '976258601942-d1ht5377538hm8v54v9q3oi9ljuvpvvu.apps.googleusercontent.com',
     iosBundleId: 'com.example.demoapp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyD87XXZQJvPDVY2xdHWHRggiBC2qGmg0O4',
-    appId: '1:566601646538:ios:1bd40fe139826df2d34f33',
-    messagingSenderId: '566601646538',
-    projectId: 'uniquesofindia-c4f7b',
-    storageBucket: 'uniquesofindia-c4f7b.appspot.com',
-    androidClientId: '566601646538-qtlovdf4dsmlbm1t0upr49nbgdtp8kg3.apps.googleusercontent.com',
-    iosClientId: '566601646538-ahu9f3di16dhievj2o6i6hv32l3oc757.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAEVbyRkc99lY5QrxQXJGTUGLKiwXRrAQM',
+    appId: '1:976258601942:ios:e16f698239ea8658c20a77',
+    messagingSenderId: '976258601942',
+    projectId: 'first-app-48a0e',
+    storageBucket: 'first-app-48a0e.appspot.com',
+    iosClientId: '976258601942-d1ht5377538hm8v54v9q3oi9ljuvpvvu.apps.googleusercontent.com',
     iosBundleId: 'com.example.demoapp',
   );
 }

@@ -1,10 +1,6 @@
-// // ignore_for_file: avoid_print
-
-// import 'package:demoapp/pages/home_page.dart';
-// import 'package:demoapp/pages/login_page.dart';
-// import 'package:flutter/material.dart';
-// import '../../models/user_model.dart';
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demoapp/resources/storage_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import '../pages/home_page.dart';
@@ -39,23 +35,32 @@ class Auththentication extends GetxController {
     required String emailAddress,
     required String passWord,
     required String phoneNumber,
+    Uint8List? image,
   }) async {
     String res = 'some error occured';
     try {
       if (fullName.isNotEmpty ||
           emailAddress.isNotEmpty ||
           passWord.isNotEmpty ||
-          phoneNumber.isNotEmpty) {
+          phoneNumber.isNotEmpty ||
+          image != null) {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
           email: emailAddress,
           password: passWord,
         );
+
+        String uid = FirebaseAuth.instance.currentUser!.uid;
+
+        String photoUrl =
+            await StorageMethods().uploadImageToStorage('Profile Pic', image!);
 
         await _database.collection('users').doc(cred.user!.uid).set({
           'full_name': fullName,
           'email': emailAddress,
           'password': passWord,
           'phone_number': phoneNumber,
+          'photo_url': photoUrl,
+          'uid': uid,
         });
         res = "success";
       } else {
@@ -110,5 +115,42 @@ class Auththentication extends GetxController {
 
   Future<void> signOutUser() async {
     await _auth.signOut();
+  }
+
+  Future<String> updateUser({
+    required String fullName,
+    required String emailAddress,
+    required String passWord,
+    required String phoneNumber,
+    Uint8List? image,
+  }) async {
+    String res = 'some error occured';
+    try {
+      if (fullName.isNotEmpty ||
+          emailAddress.isNotEmpty ||
+          passWord.isNotEmpty ||
+          phoneNumber.isNotEmpty ||
+          image != null) {
+        String uid = FirebaseAuth.instance.currentUser!.uid;
+
+        String photoUrl =
+            await StorageMethods().uploadImageToStorage('Profile Pic', image!);
+
+        await _database.collection('users').doc(uid).update({
+          'full_name': fullName,
+          'email': emailAddress,
+          'password': passWord,
+          'phone_number': phoneNumber,
+          'photo_url': photoUrl,
+          'uid': uid,
+        });
+        res = "success";
+      } else {
+        res = "Please enter all the fields";
+      }
+    } catch (err) {
+      return err.toString();
+    }
+    return res;
   }
 }
